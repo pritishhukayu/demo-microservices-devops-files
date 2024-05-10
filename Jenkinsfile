@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git 'https://github.com/pritishhukayu/demo-microservices.git' // Checkout source code
+                git branch: 'main', url: 'https://github.com/pritishhukayu/demo-microservices.git' // Checkout source code from main branch
                 sh 'npm install'   // Install dependencies
                 sh 'npm test'      // Run tests
             }
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
-                    def imageName = "hukayu/demo-microservices:${buildNumber}"
+                    def imageName = "your-registry/your-image-name:${buildNumber}"
                     docker.build(imageName) // Build Docker image with Jenkins build number as tag
                 }
             }
