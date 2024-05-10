@@ -1,21 +1,20 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "$PATH:/usr/local/bin" // Assuming npm is installed in /usr/local/bin
-    }
-
     stages {
         stage('Build') {
+            environment {
+                PATH = "/usr/local/bin:/usr/bin:/bin" // Add additional directories if npm is installed elsewhere
+            }
             steps {
                 // Checkout source code from main branch
                 git branch: 'main', url: 'https://github.com/pritishhukayu/demo-microservices.git' 
 
                 // Install dependencies
-                sh 'npm install'   
+                sh '/usr/local/bin/npm install'   // Specify the full path to npm
 
                 // Run tests
-                sh 'npm test'      
+                sh '/usr/local/bin/npm test'      // Specify the full path to npm
             }
         }
         stage('Build Docker Image') {
