@@ -4,35 +4,34 @@ pipeline {
     stages {
         stage('Checkout Source Code') {
             steps {
-                // Checkout source code from one repository
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[url: 'https://github.com/pritishhukayu/demo-microservices.git']]
-                ])
+                script {
+                    checkout scm
+                    sh 'ls -a'
+                }
             }
         }
         stage('Checkout Dockerfile') {
             steps {
-                // Checkout Dockerfile from another repository
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[url: 'https://github.com/pritishhukayu/demo-microservices-devops-files.git']]
-                ])
+                script {
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: '*/main']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[url: 'https://github.com/pritishhukayu/demo-microservices-devops-files.git']]
+                    ])
+                    sh 'ls -a'
+                }
             }
         }
         stage('Build Docker Image') {
             steps {
-                // Copy index.js and prit.txt to the workspace directory
-                sh 'cp -f index.js prit.txt . || true'
-                
-                // Build Docker image using the Dockerfile in the workspace
                 script {
+                    sh 'cp -f index.js prit.txt .'
+                    sh 'ls -a'
                     docker.build('my-image-name')
                 }
             }
         }
-        // Additional stages for testing, deployment, etc.
     }
 }
