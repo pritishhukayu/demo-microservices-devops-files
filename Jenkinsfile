@@ -15,7 +15,7 @@ pipeline {
         stage('Check Source Code Contents') {
             steps {
                 // List contents of the source code directory
-                sh 'ls -l source-code-directory'
+                sh 'ls -a'
             }
         }
         stage('Checkout Dockerfile') {
@@ -31,7 +31,7 @@ pipeline {
         stage('Check Workspace Contents') {
             steps {
                 // List contents of the workspace
-                sh 'ls -l'
+                sh 'ls -a'
             }
         }
         // Additional stages for building Docker image, testing, deployment, etc.
