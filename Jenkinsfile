@@ -24,14 +24,12 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                // Copy index.js and prit.txt from the source code directory to the workspace directory
-                script {
-                    sh 'cp source-code-directory/index.js source-code-directory/prit.txt .'
-                }
+                // Copy index.js and prit.txt to the workspace directory
+                sh 'cp index.js prit.txt .'
                 
                 // Build Docker image using the Dockerfile in the workspace
                 script {
-                    docker.build('poc:2.0')
+                    docker.build('poc:3.0')
                 }
             }
         }
