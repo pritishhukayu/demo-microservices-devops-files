@@ -37,8 +37,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'cp -f docker-files/index.js docker-files/prit.txt source-code/.'
+                    sh 'cp -f docker-files/Dockerfile source-code/.'
                     sh 'ls -a source-code'
+                    sh 'ls -a docker-files'
                     docker.build('my-image-name', './source-code')
                 }
             }
