@@ -12,6 +12,12 @@ pipeline {
                 ])
             }
         }
+        stage('Check Source Code Contents') {
+            steps {
+                // List contents of the source code directory
+                sh 'ls -l source-code-directory'
+            }
+        }
         stage('Checkout Dockerfile') {
             steps {
                 // Checkout Dockerfile from another repository
@@ -28,17 +34,6 @@ pipeline {
                 sh 'ls -l'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                // Copy Dockerfile to the directory where the source code is located
-                sh 'cp Dockerfile ./source-code-directory'
-                
-                // Build Docker image using the Dockerfile in the workspace
-                script {
-                    docker.build('pritishpoc-demo-microservices:latest')
-                }
-            }
-        }
-        // Additional stages for testing, deployment, etc.
+        // Additional stages for building Docker image, testing, deployment, etc.
     }
 }
