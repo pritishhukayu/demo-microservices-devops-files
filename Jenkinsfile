@@ -12,12 +12,6 @@ pipeline {
                 ])
             }
         }
-        stage('Check Source Code Contents') {
-            steps {
-                // List contents of the source code directory
-                sh 'ls -a'
-            }
-        }
         stage('Checkout Dockerfile') {
             steps {
                 // Checkout Dockerfile from another repository
@@ -28,12 +22,17 @@ pipeline {
                 ])
             }
         }
-        stage('Check Workspace Contents') {
+        stage('Build Docker Image') {
             steps {
-                // List contents of the workspace
-                sh 'ls -a'
+                // Copy index.js and prit.txt from the source code directory to the Dockerfile directory
+                sh 'cp source-code-directory/index.js source-code-directory/prit.txt .'
+                
+                // Build Docker image using the Dockerfile in the workspace
+                script {
+                    docker.build('poc:1.0')
+                }
             }
         }
-        // Additional stages for building Docker image, testing, deployment, etc.
+        // Additional stages for testing, deployment, etc.
     }
 }
