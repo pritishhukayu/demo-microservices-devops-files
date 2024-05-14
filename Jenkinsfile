@@ -31,7 +31,7 @@ pipeline {
                 
                 // Build Docker image using the Dockerfile in the workspace
                 script {
-                    docker.build('my-image-name')
+                    docker.build('poc:2.0)
                 }
             }
         }
