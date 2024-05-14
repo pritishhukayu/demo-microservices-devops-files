@@ -5,7 +5,13 @@ pipeline {
         stage('Checkout Source Code') {
             steps {
                 script {
-                    checkout scm
+                    checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [],
+                        submoduleCfg: [],
+                        userRemoteConfigs: [[url: 'https://github.com/pritishhukayu/demo-microservices.git']]
+                    ])
                     sh 'ls -a'
                 }
             }
@@ -14,7 +20,7 @@ pipeline {
             steps {
                 script {
                     checkout([$class: 'GitSCM',
-                        branches: [[name: '*/main']],
+                        branches: [[name: 'main']],
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [],
                         submoduleCfg: [],
