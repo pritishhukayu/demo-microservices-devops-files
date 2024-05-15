@@ -1,12 +1,17 @@
+# Use a Node.js base image
 FROM node:16-alpine
 
+# Set the working directory inside the container
 WORKDIR /app
 
+# Copy package.json and package-lock.json files to the working directory
 COPY package*.json ./
-RUN npm install
 
+# Copy the source code files into the container
 COPY . .
 
-EXPOSE 3000
+# Verify that the required files are present
+RUN ls -a
 
-CMD [ "npm", "start" ]
+# Command to run the application
+# CMD ["npm", "start"]
