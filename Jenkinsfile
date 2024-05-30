@@ -37,7 +37,9 @@ pipeline {
                     ls -a source-code
                     ls -a docker-files
                 '''
-                docker.build('my-image-name', './source-code')
+                script {
+                    docker.build('my-image-name', './source-code')
+                }
             }
         }
     }
